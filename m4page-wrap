@@ -1,0 +1,25 @@
+#! /usr/bin/env sh
+#Doesn't work yet. Don't use. Main program should be good enough anyway.
+DOCTYPE_HEADER='<!DOCTYPE html>'
+HTML='<html>'
+if [ -z $TITLE ]; then
+        TITLE='web page'
+fi
+if [ ! -z $LANG ]; then
+        HTML="<html lang=$LANG>"
+fi
+HEADER="<head>\n
+\t<meta charset=\"utf-8\">\n
+\t<title>$TITLE</title>\n
+\t<link rel=\"stylesheet\" href=\"../style.css\">\n
+\t<script src=\"script.js\"></script>\n
+</head>\n
+"
+
+echo $DOCTYPE_HEADER
+echo $HTML
+printf "%b\n" $HEADER
+echo "  <body>"
+m4page -p -f "$@"
+echo "  </body>"
+echo "</html>"
