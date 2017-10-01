@@ -67,9 +67,9 @@ title=$(echo "$titles" | tr -d '# \n')
 
 if [ ! -z "$OUTPUT_PAGE" ]; then
         hdpage -p -t "$title" | tee "$MV_FILE.html"
-        echo " <body>" | tee -a "$MV_FILE.html"
-        markdown "$MV_FILE.md" | tee -a "$MV_FILE.html"
-        echo " </body>" | tee -a "$MV_FILE.html"
+        echo "  <body>" | tee -a "$MV_FILE.html"
+        markdown "$MV_FILE.md" | sed 's|<|    <|' | tee -a "$MV_FILE.html"
+        echo "  </body>" | tee -a "$MV_FILE.html"
         echo "</html>" | tee -a "$MV_FILE.html"
 
 fi
