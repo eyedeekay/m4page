@@ -49,13 +49,14 @@ if [ -f "$MV_FILE.md" ]; then
 fi
 
 export bn=$(basename "$MV_FILE")
+export dn=$(dirname "$MV_FILE")
 
 pretext=$(metaname "$MV_FILE")
 
 titles=$(echo "$pretext" | grep 'Title:' | sed 's|Title: |# |')
 echo "$titles" | tee "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
-echo "<video width=\"92%\" controls><source=\"$MV_FILE\" type=\"video/mp4\"> video</source> </video>" | tee -a "$OUT_DIR/$bn.md"
+echo "<video width=\"92%\" controls><source=\"$dn/$bn\" type=\"video/mp4\"> video</source> </video>" | tee -a "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
 echo $(echo "$pretext" | grep 'Season:' | sed 's|Season: |## Season: |') $(echo "$pretext" | grep 'Episode:' | sed 's|Episode:| Episode:|') | tee -a "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
