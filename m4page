@@ -55,7 +55,7 @@ pretext=$(metaname "$MV_FILE")
 titles=$(echo "$pretext" | grep 'Title:' | sed 's|Title: |# |')
 echo "$titles" | tee "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
-echo "<video width=\"92%\" controls><source=\"$MV_FILE\" type=\"video/mp4\"> </video>" | tee -a "$OUT_DIR/$bn.md"
+echo "<video width=\"92%\" controls><source=\"$MV_FILE\" type=\"video/mp4\"></source> </video>" | tee -a "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
 echo $(echo "$pretext" | grep 'Season:' | sed 's|Season: |## Season: |') $(echo "$pretext" | grep 'Episode:' | sed 's|Episode:| Episode:|') | tee -a "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
@@ -74,7 +74,7 @@ title=$(echo "$titles" | tr -d '# \n')
 if [ ! -z "$OUTPUT_PAGE" ]; then
         hdpage -p -t "$title" | tee "$OUT_DIR/$bn.html"
         echo "  <body>" | tee -a "$OUT_DIR/$bn.html"
-        markdown "$OUT_DIR/$bn.md" | sed 's|<|    <|' | tee -a "$OUT_DIR/$bn.html"
+        markdown "$OUT_DIR/$bn.md" | tee -a "$OUT_DIR/$bn.html"
         echo "  </body>" | tee -a "$OUT_DIR/$bn.html"
         echo "</html>" | tee -a "$OUT_DIR/$bn.html"
 
