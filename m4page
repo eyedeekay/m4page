@@ -59,8 +59,9 @@ pretext=$(metaname "$MV_FILE")
 
 titles=$(echo "$pretext" | grep 'Title:' | sed 's|Title: |# |')
 if [ -z "$NOT_DIR" ]; then
+        echo "[Notflix]($NOT_DIR/contents.html)        " | tee "$OUT_DIR/$bn.md"
 fi
-echo "$titles" | tee "$OUT_DIR/$bn.md"
+echo "$titles" | tee -a "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md" | tee -a "$OUT_DIR/$bn.md"
 echo "<video width=\"92%\" src=\""'../'"$dn"'/'"$bn\" type=\"video/mp4\">" | tee -a "$OUT_DIR/$bn.md"
 echo "video" | tee -a "$OUT_DIR/$bn.md"
