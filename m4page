@@ -55,7 +55,7 @@ pretext=$(metaname "$MV_FILE")
 titles=$(echo "$pretext" | grep 'Title:' | sed 's|Title: |# |')
 echo "$titles" | tee "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
-echo "<video width=\"92%\" controls><source=\"$MV_FILE\" type=\"video/mp4\"> $bn</source> </video>" | tee -a "$OUT_DIR/$bn.md"
+echo "<video width=\"92%\" controls><source=\"$MV_FILE\" type=\"video/mp4\"> video</source> </video>" | tee -a "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
 echo $(echo "$pretext" | grep 'Season:' | sed 's|Season: |## Season: |') $(echo "$pretext" | grep 'Episode:' | sed 's|Episode:| Episode:|') | tee -a "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
