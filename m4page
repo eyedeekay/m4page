@@ -53,7 +53,7 @@ export bn=$(basename "$MV_FILE")
 pretext=$(metaname "$MV_FILE")
 
 titles=$(echo "$pretext" | grep 'Title:' | sed 's|Title: |# |')
-echo "$titles" | tee "$bn.md"
+echo "$titles" | tee "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
 echo "<video width=\"92%\" controls><source=\"$MV_FILE\" type=\"video/mp4\"> </video>" | tee -a "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md"
@@ -72,7 +72,7 @@ echo | tee -a "$OUT_DIR/$bn.md"
 title=$(echo "$titles" | tr -d '# \n')
 
 if [ ! -z "$OUTPUT_PAGE" ]; then
-        hdpage -p -t "$title" | tee "$bn.html"
+        hdpage -p -t "$title" | tee "$OUT_DIR/$bn.html"
         echo "  <body>" | tee -a "$OUT_DIR/$bn.html"
         markdown "$OUT_DIR/$bn.md" | sed 's|<|    <|' | tee -a "$OUT_DIR/$bn.html"
         echo "  </body>" | tee -a "$OUT_DIR/$bn.html"
