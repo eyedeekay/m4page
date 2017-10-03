@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-while getopts "hpf:d:" opt; do
+while getopts "hpf:d:n:" opt; do
   case $opt in
     p)
       OUTPUT_PAGE="html"
@@ -16,6 +16,10 @@ while getopts "hpf:d:" opt; do
     g)
       echo "-g using external metadata file: $OPTARG" >&2
       MET_FILE=$OPTARG
+      ;;
+    g)
+      echo "-n notflix directory: $OPTARG" >&2
+      NOT_DIR=$OPTARG
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -54,6 +58,8 @@ export dn=$(dirname "$MV_FILE" | sed 's|./||')
 pretext=$(metaname "$MV_FILE")
 
 titles=$(echo "$pretext" | grep 'Title:' | sed 's|Title: |# |')
+if [ -z "$NOT_DIR" ]; then
+fi
 echo "$titles" | tee "$OUT_DIR/$bn.md"
 echo | tee -a "$OUT_DIR/$bn.md" | tee -a "$OUT_DIR/$bn.md"
 echo "<video width=\"92%\" src=\""'../'"$dn"'/'"$bn\" type=\"video/mp4\">" | tee -a "$OUT_DIR/$bn.md"
