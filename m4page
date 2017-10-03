@@ -10,7 +10,7 @@ while getopts "hpf:d:" opt; do
       MV_FILE=$OPTARG
       ;;
     d)
-      echo "-f using file: $OPTARG" >&2
+      echo "-d using output: $OPTARG" >&2
       OUT_DIR=$OPTARG
       ;;
     g)
