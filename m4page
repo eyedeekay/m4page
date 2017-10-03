@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-while getopts "hpf:" opt; do
+while getopts "hpf:d:" opt; do
   case $opt in
     p)
       OUTPUT_PAGE="html"
@@ -8,6 +8,10 @@ while getopts "hpf:" opt; do
     f)
       echo "-f using file: $OPTARG" >&2
       MV_FILE=$OPTARG
+      ;;
+    d)
+      echo "-f using file: $OPTARG" >&2
+      OUT_DIR=$OPTARG
       ;;
     g)
       echo "-g using external metadata file: $OPTARG" >&2
@@ -44,32 +48,34 @@ if [ -f "$MV_FILE.md" ]; then
         rm "$MV_FILE.md"
 fi
 
+export bn=$(basename "$MV_FILE")
+
 pretext=$(metaname "$MV_FILE")
 
 titles=$(echo "$pretext" | grep 'Title:' | sed 's|Title: |# |')
-echo "$titles" | tee "$MV_FILE.md"
-echo | tee -a "$MV_FILE.md"
-echo "<video width=\"92%\" controls><source=\"$MV_FILE\" type=\"video/mp4\"> </video>" | tee -a "$MV_FILE.md"
-echo | tee -a "$MV_FILE.md"
-echo $(echo "$pretext" | grep 'Season:' | sed 's|Season: |## Season: |') $(echo "$pretext" | grep 'Episode:' | sed 's|Episode:| Episode:|') | tee -a "$MV_FILE.md"
-echo | tee -a "$MV_FILE.md"
-echo "$pretext" | grep 'Description:' | sed 's|Description: |##### Description: |' | tee -a "$MV_FILE.md"
-echo | tee -a "$MV_FILE.md"
-echo "$pretext" | grep 'Date:' | sed 's|Date: |#### Date: |' | tee -a "$MV_FILE.md"
-echo "$pretext" | grep 'Year:' | sed 's|Year: |#### Year: |' | tee -a "$MV_FILE.md"
-echo | tee -a "$MV_FILE.md"
-echo "$pretext" | grep 'Director:' | sed 's|Director: |##### Director: |' | tee -a "$MV_FILE.md"
-echo | tee -a "$MV_FILE.md"
-echo "$pretext" | grep 'License:' | sed 's|License: |##### License: |' | tee -a "$MV_FILE.md"
-echo | tee -a "$MV_FILE.md"
+echo "$titles" | tee "$bn.md"
+echo | tee -a "$OUT_DIR/$bn.md"
+echo "<video width=\"92%\" controls><source=\"$MV_FILE\" type=\"video/mp4\"> </video>" | tee -a "$OUT_DIR/$bn.md"
+echo | tee -a "$OUT_DIR/$bn.md"
+echo $(echo "$pretext" | grep 'Season:' | sed 's|Season: |## Season: |') $(echo "$pretext" | grep 'Episode:' | sed 's|Episode:| Episode:|') | tee -a "$OUT_DIR/$bn.md"
+echo | tee -a "$OUT_DIR/$bn.md"
+echo "$pretext" | grep 'Description:' | sed 's|Description: |##### Description: |' | tee -a "$OUT_DIR/$bn.md"
+echo | tee -a "$OUT_DIR/$bn.md"
+echo "$pretext" | grep 'Date:' | sed 's|Date: |#### Date: |' | tee -a "$OUT_DIR/$bn.md"
+echo "$pretext" | grep 'Year:' | sed 's|Year: |#### Year: |' | tee -a "$OUT_DIR/$bn.md"
+echo | tee -a "$OUT_DIR/$bn.md"
+echo "$pretext" | grep 'Director:' | sed 's|Director: |##### Director: |' | tee -a "$OUT_DIR/$bn.md"
+echo | tee -a "$OUT_DIR/$bn.md"
+echo "$pretext" | grep 'License:' | sed 's|License: |##### License: |' | tee -a "$OUT_DIR/$bn.md"
+echo | tee -a "$OUT_DIR/$bn.md"
 
 title=$(echo "$titles" | tr -d '# \n')
 
 if [ ! -z "$OUTPUT_PAGE" ]; then
-        hdpage -p -t "$title" | tee "$MV_FILE.html"
-        echo "  <body>" | tee -a "$MV_FILE.html"
-        markdown "$MV_FILE.md" | sed 's|<|    <|' | tee -a "$MV_FILE.html"
-        echo "  </body>" | tee -a "$MV_FILE.html"
-        echo "</html>" | tee -a "$MV_FILE.html"
+        hdpage -p -t "$title" | tee "$bn.html"
+        echo "  <body>" | tee -a "$OUT_DIR/$bn.html"
+        markdown "$OUT_DIR/$bn.md" | sed 's|<|    <|' | tee -a "$OUT_DIR/$bn.html"
+        echo "  </body>" | tee -a "$OUT_DIR/$bn.html"
+        echo "</html>" | tee -a "$OUT_DIR/$bn.html"
 
 fi
